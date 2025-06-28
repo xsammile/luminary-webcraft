@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luminary WebCraft</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+  <style>   
+
+:root {
+  --primary: #00ffe1;
+  --bg-light: #f9f9f9;
+  --text-dark: #1f2937;
+  --border-light: #d1d5db;
+  --popular-bg: #00ffe1;
+}
+
+.pricing-section {
+  padding: 4rem 2rem;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.pricing-section h2 {
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+  gap: 2.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.plan {
+  background: white;
+  border: 2px solid var(--border-light);
+  border-radius: 12px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 8px 16px rgb(0 0 0 / 0.1);
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.plan:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 16px 32px rgb(0 0 0 / 0.15);
+}
+
+.plan h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.plan p {
+  font-size: 1.1rem;
+  margin: 0.7rem 0;
+  color: #444;
+}
+
+.plan strong {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 1.5rem;
+  color: var(--text-dark);
+}
+
+/* Popular Plan Styling */
+.most-popular {
+  border-color: var(--popular-bg);
+  box-shadow: 0 0 20px var(--popular-bg);
+  background: #e0fffc;
+  font-weight: 600;
+}
+
+.most-popular h3 {
+  position: relative;
+  padding-right: 1.5rem;
+}
+
+/* Vertical ribbon on left top corner */
+.most-popular::before {
+  content: "POPULAR";
+  position: absolute;
+  left: -45px;
+  top: 20px;
+  width: 120px;
+  padding: 6px 0;
+  background: var(--popular-bg);
+  color: #000;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  text-align: center;
+  transform: rotate(-45deg);
+  border-radius: 4px;
+  box-shadow: 0 3px 6px rgb(0 255 225 / 0.5);
+  z-index: 10;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .pricing-section {
+    padding: 2rem 1rem;
+  }
+
+  .plan {
+    padding: 1.5rem 1rem;
+  }
+
+  .plan h3 {
+    font-size: 1.4rem;
+  }
+
+  .plan strong {
+    font-size: 1.6rem;
+  }
+}
+
+
+   
+.about-section, .services-section {
+  padding: 4rem 2rem;
+  background: linear-gradient(to bottom, rgba(10,15,28,0.8), rgba(31,41,55,0.8));
+  text-align: center;
+}
+
+.about-section p {
+  max-width: 800px;
+  margin: auto;
+  font-size: 1.1rem;
+  color: #ccc;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.service-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+}
+
+.service-card h3 {
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.service-card p {
+  color: #bbb;
+  font-size: 0.95rem;
+}
+
+
+
+    :root {
+      --primary: #00ffe1;
+      --bg-dark: linear-gradient(135deg, #0a0f1c, #1f2937);
+      --glass: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg-dark);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .background-animation, .binary-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      background: transparent;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .binary-bg span {
+      color: #00ff00;
+      opacity: 0.25;
+      font-size: 16px;
+      font-family: monospace;
+      position: absolute;
+      top: -50px;
+      white-space: nowrap;
+      animation: float 10s linear infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+
+    .code-line {
+      font-family: 'Orbitron', monospace;
+      color: var(--primary);
+      font-size: 0.9rem;
+      white-space: nowrap;
+      opacity: 0;
+      animation: codeFall 10s linear infinite;
+      position: absolute;
+    }
+
+    @keyframes codeFall {
+      0% { top: -50px; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { top: 100vh; opacity: 0; }
+    }
+
+    header {
+      padding: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(10px);
+      background: var(--glass);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      color: var(--primary);
+    }
+
+    nav a {
+      color: white;
+      margin-left: 2rem;
+      text-decoration: none;
+      font-weight: 300;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(to bottom, rgba(10,15,28,0.8), rgba(31,41,55,0.9));
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+
+    .btn {
+      padding: 0.75rem 2rem;
+      border: none;
+      background: var(--primary);
+      color: black;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #00c2a7;
+    }
+
+    .calendly-section {
+      padding: 4rem 2rem;
+      background: linear-gradient(to right, rgba(10,15,28,0.6), rgba(31,41,55,0.6));
+      backdrop-filter: blur(6px);
+      min-height: 700px;
+    }
+
+    .calendly-section iframe {
+      width: 100%;
+      min-height: 700px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+
+    footer {
+      padding: 3rem 2rem;
+      background: linear-gradient(to right, #0f172a, #1e293b);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border);
+      color: #ccc;
+      position: relative;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: auto;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h4 {
+      color: #fff;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .footer-section a, .footer-section p {
+      display: block;
+      color: #bbb;
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .footer-section a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      font-size: 0.85rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="background-animation" id="code-bg"></div>
+  <div class="binary-bg" id="binary-bg"></div>
+
+  <header>
+    <div class="logo">Luminary WebCraft</div>
+    
+<nav>
+  <a href="#">Home</a>
+  <a href="#services">Services</a> <!-- This is the key fix -->
+  <a href="#pricing">pricing</a>
+  <a href="#calendly">Consult</a>
+  <a href="#footer">Contact</a>
+</nav>
+
+
+  </header>
+
+  <section class="hero">
+    <h1>We Code. You Grow.</h1>
+    <p>We create cutting-edge websites for forward-thinking businesses. Book a consultation to start building your digital future today.</p>
+    <button class="btn" onclick="document.getElementById('calendly').scrollIntoView({ behavior: 'smooth' });">Book a Consultation</button>
+  </section>
+
+<section id="pricing" class="pricing-section">
+    <h2 style="text-align:center; margin-bottom: 2rem; color: var(--primary);"> Pricing </h2>
+    <div class="pricing-grid">
+      <div class="plan">
+        <h3>Starter</h3>
+        <p><strong>R2,999</strong></p>
+        <p>1-page site</p>
+        <p>Mobile-friendly</p>
+        <p>Contact form</p>
+        <p>Basic design</p>
+      </div>
+      <div class="plan most-popular">
+        <h3>Professional</h3>
+        <p><strong>R6,499</strong></p>
+        <p>Up to 5 pages</p>
+        <p>SEO-ready</p>
+        <p>Fast loading</p>
+        <p>Blog + Analytics</p>
+      </div>
+      <div class="plan">
+        <h3>Elite</h3>
+        <p><strong>R12,999</strong></p>
+        <p>10+ pages</p>
+        <p>Admin Dashboard</p>
+        <p>Branding + Animations</p>
+        <p>API-ready</p>
+      </div>
+      <div class="plan">
+        <h3>Enterprise</h3>
+        <p><strong>Custom Quote</strong></p>
+        <p>Full-stack systems</p>
+        <p>CRM / Ecommerce</p>
+        <p>Dedicated PM</p>
+        <p>Advanced features</p>
+      </div>
+    </div>
+  </section>
+
+<section id="about" class="about-section">
+  <div class="container">
+    <h2>About Us</h2>
+    <p>
+      Luminary WebCraft is a digital solutions company focused on designing and developing modern, responsive, and secure websites.
+      Our mission is to help startups and growing businesses build a powerful online presence with ease.
+    </p>
+  </div>
+</section>
+
+<section id="services" class="services-section">
+  <div class="container">
+    <h2>Our Services</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>Web Design</h3>
+        <p>Clean, modern, and mobile-friendly designs tailored to your brand.</p>
+      </div>
+      <div class="service-card">
+        <h3>Web Development</h3>
+        <p>Responsive and scalable websites built with the latest technologies.</p>
+      </div>
+      <div class="service-card">
+        <h3>SEO Optimization</h3>
+        <p>Improve your site's visibility and rank higher on search engines.</p>
+      </div>
+      <div class="service-card">
+        <h3>Maintenance & Support</h3>
+        <p>We offer continued support to keep your site running smoothly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  <section id="calendly" class="calendly-section">
+    <h2 style="text-align:center; margin-bottom: 2rem; color: var(--primary);">Book a Consultation</h2>
+    <iframe src="https://calendly.com/luminarywebcraft" scrolling="no"></iframe>
+  </section>
+
+  <footer id="footer">
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h4>Company</h4>
+        <a href="#">About Us</a>
+        <a href="#">Our Services</a>
+        <a href="#">Careers</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer-section">
+        <h4>Support</h4>
+        <a href="#">Help Center</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Contact Us</a>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p>Email: luminarywebcraft@gmail.com</p>
+        
+        <p>Location: Pietermaritzburg, South Africa</p>
+      </div>
+      <div class="footer-section">
+        <h4>Follow Us</h4>
+        <a href="#">Facebook</a>
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2025 Luminary WebCraft. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    const codeBg = document.getElementById('code-bg');
+    const codeLines = [
+      'function buildSite() {',
+      '  console.log("Launching site...");',
+      '  createHeader();',
+      '  createHeroSection();',
+      '  createFooter();',
+      '}',
+      'const brand = "Luminary WebCraft";',
+      'buildSite();'
+    ];
+
+    function randomX() {
+      return Math.floor(Math.random() * window.innerWidth) + 'px';
+    }
+
+    function createCodeLine() {
+      const line = document.createElement('div');
+      line.classList.add('code-line');
+      line.textContent = codeLines[Math.floor(Math.random() * codeLines.length)];
+      line.style.left = randomX();
+      line.style.top = '-50px';
+      line.style.animationDuration = `${5 + Math.random() * 5}s`;
+      codeBg.appendChild(line);
+      setTimeout(() => line.remove(), 10000);
+    }
+
+    setInterval(createCodeLine, 400);
+
+    const binaryBg = document.getElementById('binary-bg');
+    const binaryChars = ['0', '1'];
+
+    function createBinaryLine() {
+      const span = document.createElement('span');
+      span.textContent = Array.from({ length: 40 }, () => binaryChars[Math.floor(Math.random() * 2)]).join('');
+      span.style.left = randomX();
+      span.style.animationDuration = `${8 + Math.random() * 4}s`;
+      binaryBg.appendChild(span);
+      setTimeout(() => span.remove(), 12000);
+    }
+
+    setInterval(createBinaryLine, 200);
+  </script>
+</body>
+</html>
+<!-- End of file -->

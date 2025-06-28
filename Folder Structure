@@ -1,0 +1,18 @@
+luminary-webcraft/
+│
+├── server.js             ✅ Everything runs here
+├── .env                  ✅ Secrets (email & DB info)
+├── package.json          ✅ npm init -y
+├── node_modules/         ✅ installed packages
+├── public/               ✅ Static files served by Express
+│   ├── css/              ✅ CSS files
+│   ├── js/               ✅ JS files
+│   ├── images/           ✅ Images
+│   └── index.html        ✅ HTML files
+├── models/               ✅ MongoDB schemas
+│   └── Contact.js        ✅ Contact form schema
+├── views/                ✅ EJS templates (if using)
+└── routes/               ✅ Express routes (if using)
+    ├── index.js          ✅ Main route file
+    └── api.js            ✅ API routes (if any)
+    └── contact.js        ✅ Contact form routes
