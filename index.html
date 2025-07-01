@@ -15,6 +15,13 @@
   --popular-bg: #00ffe1;
 }
 
+/* Added class for section titles */
+.section-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--primary);
+}
+
 .pricing-section {
   padding: 4rem 2rem;
   background: var(--bg-light);
@@ -28,6 +35,12 @@
   color: var(--primary);
   margin-bottom: 3rem;
   text-align: center;
+}
+
+.pricing-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--primary);
 }
 
 .pricing-grid {
@@ -244,6 +257,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       background: var(--glass);
       border-bottom: 1px solid var(--border);
@@ -307,8 +321,9 @@
 
     .calendly-section {
       padding: 4rem 2rem;
-      background: linear-gradient(to right, rgba(10,15,28,0.6), rgba(31,41,55,0.6));
+      -webkit-backdrop-filter: blur(6px);
       backdrop-filter: blur(6px);
+      min-height: 700px;
       min-height: 700px;
     }
 
@@ -321,10 +336,11 @@
     }
 
     footer {
-      padding: 3rem 2rem;
-      background: linear-gradient(to right, #0f172a, #1e293b);
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       border-top: 1px solid var(--border);
+      color: #ccc;
+      position: relative;
       color: #ccc;
       position: relative;
     }
@@ -384,17 +400,17 @@
   </header>
 
   <section class="hero">
-    <h1>We Code. You Grow.</h1>
+    <h2 class="pricing-title">Pricing</h2>
     <p>We create cutting-edge websites for forward-thinking businesses. Book a consultation to start building your digital future today.</p>
     <button class="btn" onclick="document.getElementById('calendly').scrollIntoView({ behavior: 'smooth' });">Book a Consultation</button>
   </section>
 
 <section id="pricing" class="pricing-section">
-    <h2 style="text-align:center; margin-bottom: 2rem; color: var(--primary);"> Pricing </h2>
+    <h2 class="pricing-title">Pricing</h2>
     <div class="pricing-grid">
       <div class="plan">
         <h3>Starter</h3>
-        <p><strong>R2,999</strong></p>
+        <p><strong>R2,999 / $170.18</strong></p>
         <p>1-page site</p>
         <p>Mobile-friendly</p>
         <p>Contact form</p>
@@ -402,7 +418,7 @@
       </div>
       <div class="plan most-popular">
         <h3>Professional</h3>
-        <p><strong>R6,499</strong></p>
+        <p><strong>R6,499 / $368.83</strong></p>
         <p>Up to 5 pages</p>
         <p>SEO-ready</p>
         <p>Fast loading</p>
@@ -410,7 +426,7 @@
       </div>
       <div class="plan">
         <h3>Elite</h3>
-        <p><strong>R12,999</strong></p>
+        <p><strong>R12,999 / $737.66</strong></p>
         <p>10+ pages</p>
         <p>Admin Dashboard</p>
         <p>Branding + Animations</p>
@@ -457,15 +473,15 @@
         <h3>Maintenance & Support</h3>
         <p>We offer continued support to keep your site running smoothly.</p>
       </div>
-    </div>
+    <h2 class="section-title">Book a Consultation</h2>
   </div>
 </section>
 
 
 
   <section id="calendly" class="calendly-section">
-    <h2 style="text-align:center; margin-bottom: 2rem; color: var(--primary);">Book a Consultation</h2>
-    <iframe src="https://calendly.com/luminarywebcraft" scrolling="no"></iframe>
+    <h2 class="section-title">Book a Consultation</h2>
+    <iframe src="https://calendly.com/luminarywebcraft" scrolling="no" title="Book a consultation with Luminary WebCraft"></iframe>
   </section>
 
   <footer id="footer">
