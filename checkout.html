@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Checkout - Luminary WebCraft</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto:wght@300;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <script src="https://www.paypal.com/sdk/js?client-id=AbnehmutNV-xkh05VIuvvAB1xHckhJE-awA2hpDPOUL9o5tsNyu2ELj2DjSRuuoZvtV8s4oWH5ZemTQn&currency=USD"></script>
+  <style>
+:root { --primary: #00ffe1; }
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to bottom, rgba(10,15,28,0.8), rgba(31,41,55,0.9));
+    color: white;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  header, footer {
+    padding: 1rem 2rem;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  header .logo {
+    font-family: 'Orbitron', monospace;
+    font-size: 1.8rem;
+    color: var(--primary);
+  }
+
+  main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
+
+  .checkout-box {
+    background: white;
+    color: black;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 0 25px rgba(0,255,225,0.5);
+    max-width: 500px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .checkout-box h2, .checkout-box h3 {
+    color: var(--primary);
+    margin-top: 0;
+  }
+
+  .checkout-box .pay-btn {
+    margin-top: 1rem;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .checkout-box .payfast-btn {
+    background: #ff6600;
+    color: white;
+  }
+
+  .checkout-box .email-field {
+    margin: 1rem 0;
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+  }
+
+  a.back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  a.back-link:hover {
+    text-decoration: underline;
+  }
+
+  a.nav-link {
+    color: white;
+    text-decoration: none;
+  }
+
+  a.nav-link:hover {
+    text-decoration: underline;
+  }
+
+  #paypal-button-container {
+    margin-top: 1rem;
+  }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Luminary WebCraft</div>
+    <nav><a href="index.html" class="nav-link">Home</a></nav>
+  </header>
+
+  <main>
+    <div class="checkout-box">
+    <a href="index.html" class="back-link">&larr; Back to Plans</a>
+    <h2>Checkout</h2>
+    <h3 id="planName"></h3>
+    <p>Price: <strong>R<span id="planPrice"></span></strong></p>
+    <p>Converted: <strong>$<span id="usdPrice">Loading...</span> USD</strong></p>
+
+    <input type="email" id="clientEmail" class="email-field" placeholder="Enter your email" required />
+
+    <!-- LIVE PayFast URL -->
+<form action="https://www.payfast.co.za/eng/process" method="post">
+
+      <input type="hidden" name="merchant_id" value="15866158">
+      <input type="hidden" name="merchant_key" value="weccqyhwb3tms">
+      <input type="hidden" name="return_url" value="https://yourdomain.com/thank-you.html">
+      <input type="hidden" name="cancel_url" value="https://yourdomain.com/cancelled.html">
+      <input type="hidden" name="notify_url" value="https://yourdomain.com/notify.php">
+      <input type="hidden" name="amount" id="payfastAmount" value="">
+      <input type="hidden" name="item_name" id="itemName" value="">
+      <input type="hidden" name="email_address" id="payfastEmail" value="">
+      <button type="submit" class="pay-btn payfast-btn">Pay with PayFast</button>
+    </form>
+
+    <div id="paypal-button-container"></div>
+  </main>
+
+  <footer>
+    &copy; 2025 Luminary WebCraft. All rights reserved.
+  </footer>
+
+  <script>
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    const plan = getQueryParam('plan') || 'Unknown Plan';
+    const priceStr = getQueryParam('price') || '0';
+    const price = parseFloat(priceStr);
+    const planDisplay = document.getElementById('planName');
+    const priceDisplay = document.getElementById('planPrice');
+    const usdDisplay = document.getElementById('usdPrice');
+    const payfastAmount = document.getElementById('payfastAmount');
+    const itemName = document.getElementById('itemName');
+    const payfastForm = document.getElementById('payfastForm');
+
+    let convertedUSD = 0;
+
+    planDisplay.textContent = plan;
+    priceDisplay.textContent = price > 0 ? price : 'Custom Quote - Please Contact Us';
+
+    if (price <= 0) {
+      payfastForm.style.display = 'none';
+      document.getElementById('paypal-button-container').innerHTML = '<p style="color:red;">Custom plans require contacting us for a quote.</p>';
+    }
+
+    fetch('https://api.exchangerate-api.com/v4/latest/ZAR')
+      .then(res => res.json())
+      .then(data => {
+        const rate = data.rates.USD;
+        convertedUSD = (price * rate).toFixed(2);
+        usdDisplay.textContent = convertedUSD;
+
+        if (price > 0) {
+          paypal.Buttons({
+            createOrder: function (data, actions) {
+              return actions.order.create({
+                purchase_units: [{
+                  amount: { value: convertedUSD },
+                  description: `Luminary WebCraft - ${plan} Plan`
+                }]
+              });
+            },
+            onApprove: function (data, actions) {
+              return actions.order.capture().then(function (details) {
+                window.location.href = `thank-you.html?plan=${encodeURIComponent(plan)}&payer=${details.payer.name.given_name}`;
+              });
+            }
+          }).render('#paypal-button-container');
+        }
+      })
+      .catch(err => {
+        usdDisplay.textContent = 'Unavailable';
+        console.error('Exchange rate fetch failed:', err);
+      });
+
+    document.getElementById('clientEmail').addEventListener('input', function () {
+      document.getElementById('payfastEmail').value = this.value.trim();
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (price > 0) {
+        payfastAmount.value = price.toFixed(2);
+        itemName.value = `Luminary WebCraft - ${plan} Plan`;
+      }
+    });
+  </script>
+</body>
+</html>
