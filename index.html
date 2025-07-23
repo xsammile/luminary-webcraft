@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Luminary WebCraft</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/favicon.png">
+
   <style>   
 
 :root {
@@ -313,6 +315,8 @@
       border-radius: 5px;
       cursor: pointer;
       transition: background 0.3s;
+      text-decoration: none;
+      display: inline-block;
     }
 
     .btn:hover {
@@ -323,24 +327,15 @@
       padding: 4rem 2rem;
       -webkit-backdrop-filter: blur(6px);
       backdrop-filter: blur(6px);
-      min-height: 700px;
-      min-height: 700px;
-    }
-
-    .calendly-section iframe {
-      width: 100%;
-      min-height: 700px;
-      border: none;
-      border-radius: 8px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      min-height: 400px;
+      min-height: 400px;
+      text-align: center;
     }
 
     footer {
       -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       border-top: 1px solid var(--border);
-      color: #ccc;
-      position: relative;
       color: #ccc;
       position: relative;
     }
@@ -379,6 +374,10 @@
       font-size: 0.85rem;
       color: #888;
     }
+    .btn-large {
+      font-size: 1.1rem;
+      padding: 1rem 2rem;
+    }
   </style>
 </head>
 <body>
@@ -388,15 +387,13 @@
   <header>
     <div class="logo">Luminary WebCraft</div>
     
-<nav>
-  <a href="#">Home</a>
-  <a href="#services">Services</a> <!-- This is the key fix -->
-  <a href="#pricing">pricing</a>
-  <a href="#calendly">Consult</a>
-  <a href="#footer">Contact</a>
-</nav>
-
-
+    <nav>
+      <a href="#">Home</a>
+      <a href="#services">Services</a>
+      <a href="#pricing">pricing</a>
+      <a href="#calendly">Consult</a>
+      <a href="#footer">Contact</a>
+    </nav>
   </header>
 
   <section class="hero">
@@ -405,7 +402,7 @@
     <button class="btn" onclick="document.getElementById('calendly').scrollIntoView({ behavior: 'smooth' });">Book a Consultation</button>
   </section>
 
-<section id="pricing" class="pricing-section">
+  <section id="pricing" class="pricing-section">
     <h2 class="pricing-title">Pricing</h2>
     <div class="pricing-grid">
       <div class="plan">
@@ -415,6 +412,7 @@
         <p>Mobile-friendly</p>
         <p>Contact form</p>
         <p>Basic design</p>
+        <a class="btn-select" href="checkout.html?plan=Starter&price=2999">Select Plan</a>
       </div>
       <div class="plan most-popular">
         <h3>Professional</h3>
@@ -423,6 +421,7 @@
         <p>SEO-ready</p>
         <p>Fast loading</p>
         <p>Blog + Analytics</p>
+        <a class="btn-select" href="checkout.html?plan=Professional&price=6499">Select Plan</a>
       </div>
       <div class="plan">
         <h3>Elite</h3>
@@ -431,6 +430,7 @@
         <p>Admin Dashboard</p>
         <p>Branding + Animations</p>
         <p>API-ready</p>
+        <a class="btn-select" href="checkout.html?plan=Elite&price=12999">Select Plan</a>
       </div>
       <div class="plan">
         <h3>Enterprise</h3>
@@ -439,49 +439,50 @@
         <p>CRM / Ecommerce</p>
         <p>Dedicated PM</p>
         <p>Advanced features</p>
+        <a class="btn-select" href="checkout.html?plan=Enterprise&price=0">Select Plan</a>
       </div>
     </div>
   </section>
 
-<section id="about" class="about-section">
-  <div class="container">
-    <h2>About Us</h2>
-    <p>
-      Luminary WebCraft is a digital solutions company focused on designing and developing modern, responsive, and secure websites.
-      Our mission is to help startups and growing businesses build a powerful online presence with ease.
-    </p>
-  </div>
-</section>
+  <section id="about" class="about-section">
+    <div class="container">
+      <h2>About Us</h2>
+      <p>
+        Luminary WebCraft is a digital solutions company focused on designing and developing modern, responsive, and secure websites.
+        Our mission is to help startups and growing businesses build a powerful online presence with ease.
+      </p>
+    </div>
+  </section>
 
-<section id="services" class="services-section">
-  <div class="container">
-    <h2>Our Services</h2>
-    <div class="services-grid">
-      <div class="service-card">
-        <h3>Web Design</h3>
-        <p>Clean, modern, and mobile-friendly designs tailored to your brand.</p>
-      </div>
-      <div class="service-card">
-        <h3>Web Development</h3>
-        <p>Responsive and scalable websites built with the latest technologies.</p>
-      </div>
-      <div class="service-card">
-        <h3>SEO Optimization</h3>
-        <p>Improve your site's visibility and rank higher on search engines.</p>
-      </div>
-      <div class="service-card">
-        <h3>Maintenance & Support</h3>
-        <p>We offer continued support to keep your site running smoothly.</p>
-      </div>
-    <h2 class="section-title">Book a Consultation</h2>
-  </div>
-</section>
-
-
+  <section id="services" class="services-section">
+    <div class="container">
+      <h2>Our Services</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Web Design</h3>
+          <p>Clean, modern, and mobile-friendly designs tailored to your brand.</p>
+        </div>
+        <div class="service-card">
+          <h3>Web Development</h3>
+          <p>Responsive and scalable websites built with the latest technologies.</p>
+        </div>
+        <div class="service-card">
+          <h3>SEO Optimization</h3>
+          <p>Improve your site's visibility and rank higher on search engines.</p>
+        </div>
+        <div class="service-card">
+          <h3>Maintenance & Support</h3>
+          <p>We offer continued support to keep your site running smoothly.</p>
+        </div>
+      
+  </section>
 
   <section id="calendly" class="calendly-section">
     <h2 class="section-title">Book a Consultation</h2>
-    <iframe src="https://calendly.com/luminarywebcraft" scrolling="no" title="Book a consultation with Luminary WebCraft"></iframe>
+      <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3iAX98lzUfJDxW04Jr2H_0HYKZ7tmzj7mmdiFFe7uOBVRKqjHdFxLTYwwtiQjWGZIZcbF6mdr9" target="_blank" rel="noopener" class="btn btn-large">
+        Book via Google Calendar
+      </a>
+    
   </section>
 
   <footer id="footer">
@@ -490,20 +491,21 @@
         <h4>Company</h4>
         <a href="#">About Us</a>
         <a href="#">Our Services</a>
+        <a href="retainer.html">Website Maintenance Retainer</a>
         <a href="#">Careers</a>
-        <a href="#">Blog</a>
-      </div>
+        <a href="#">Blog</a>        
+        </div> 
       <div class="footer-section">
         <h4>Support</h4>
         <a href="#">Help Center</a>
-        <a href="#">Terms of Service</a>
-        <a href="#">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="cancellation.html">Cancellation Policy</a>
         <a href="#">Contact Us</a>
       </div>
       <div class="footer-section">
         <h4>Contact</h4>
         <p>Email: luminarywebcraft@gmail.com</p>
-        
         <p>Location: Pietermaritzburg, South Africa</p>
       </div>
       <div class="footer-section">
@@ -563,6 +565,19 @@
 
     setInterval(createBinaryLine, 200);
   </script>
+
+  <script>
+    // Smooth scroll for navigation links
+    document.querySelectorAll('nav a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
-<!-- End of file -->
