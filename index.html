@@ -378,6 +378,19 @@
       font-size: 1.1rem;
       padding: 1rem 2rem;
     }
+    .logo-png {
+  height: auto;
+  width: 190px;
+  display: block;
+  filter: drop-shadow(0 0 6px #00ffe1) drop-shadow(0 0 12px #00ffe1);
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.logo-png:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 10px #00ffe1) drop-shadow(0 0 20px #00ffe1);
+}
+
   </style>
 </head>
 <body>
@@ -385,8 +398,11 @@
   <div class="binary-bg" id="binary-bg"></div>
 
   <header>
-    <div class="logo">Luminary WebCraft</div>
-    
+    <a href="index.html" class="logo">
+  <img src="Luminary.png" alt="Luminary WebCraft" class="logo-png" />
+
+</a>
+
     <nav>
       <a href="#">Home</a>
       <a href="#services">Services</a>
