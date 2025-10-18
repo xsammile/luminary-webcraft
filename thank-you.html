@@ -1,73 +1,484 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thank You - Luminary WebCraft</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto:wght@300;500&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/png" href="/favicon.png" />
   <style>
-    :root { --primary: #00ffe1; }
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(to bottom, rgba(10,15,28,0.8), rgba(31,41,55,0.9));
-      color: white;
-      margin: 0; padding: 0;
-      display: flex; flex-direction: column;
-      min-height: 100vh;
-      justify-content: center;
+    :root {
+      --pure-white: #ffffff;
+      --pure-black: #000000;
+      --gray-50: #fafafa;
+      --gray-100: #f5f5f5;
+      --gray-200: #e5e5e5;
+      --gray-800: #262626;
+      --gray-900: #171717;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      background: var(--pure-black);
+      color: var(--pure-white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Professional Header */
+    header {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
+      padding: 1.5rem 2rem;
+      background: rgba(0, 0, 0, 0.9);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--gray-800);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--pure-white);
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    nav {
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--gray-200);
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: var(--pure-white);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--pure-white);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* Main Content */
+    main {
+      margin-top: 80px;
+      min-height: calc(100vh - 80px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .thank-you-container {
+      max-width: 800px;
+      text-align: center;
+      padding: 3rem;
+      background: var(--gray-900);
+      border: 1px solid var(--gray-800);
+      border-radius: 0;
+      position: relative;
+    }
+
+    .thank-you-icon {
+      font-size: 4rem;
+      margin-bottom: 2rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .thank-you-container h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--pure-white) 0%, var(--gray-200) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .thank-you-container p {
+      font-size: 1.2rem;
+      color: var(--gray-200);
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .confirmation-details {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--gray-800);
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: left;
+    }
+
+    .confirmation-details h3 {
+      color: var(--pure-white);
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+    }
+
+    .confirmation-details ul {
+      list-style: none;
+      color: var(--gray-200);
+    }
+
+    .confirmation-details li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--gray-800);
+    }
+
+    .confirmation-details li:last-child {
+      border-bottom: none;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border: 2px solid var(--pure-white);
+      background: transparent;
+      color: var(--pure-white);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 0;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: inline-block;
       text-align: center;
     }
-    h1 {
-      font-family: 'Orbitron', monospace;
-      color: var(--primary);
-      font-size: 3rem;
-      margin-bottom: 1rem;
+
+    .btn-primary {
+      background: var(--pure-white);
+      color: var(--pure-black);
     }
-    p {
-      font-size: 1.2rem;
-      max-width: 400px;
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
     }
-    a.btn-home {
-      margin-top: 2rem;
-      padding: 1rem 2rem;
-      background: var(--primary);
-      color: black;
-      font-weight: bold;
-      border-radius: 6px;
+
+    /* 3D Canvas Container */
+    .thank-you-visual {
+      position: relative;
+      height: 300px;
+      border: 1px solid var(--gray-800);
+      background: var(--gray-900);
+      margin: 2rem 0;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--gray-900);
+      padding: 4rem 2rem 2rem;
+      border-top: 1px solid var(--gray-800);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3rem;
+      max-width: 1200px;
+      margin: 0 auto 3rem;
+    }
+
+    .footer-column h4 {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .footer-column a {
+      display: block;
+      color: var(--gray-200);
       text-decoration: none;
-      display: inline-block;
-      transition: background 0.3s;
+      margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
     }
-    a.btn-home:hover {
-      background: #00c2a7;
+
+    .footer-column a:hover {
+      color: var(--pure-white);
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid var(--gray-800);
+      color: var(--gray-200);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .thank-you-container {
+        padding: 2rem 1.5rem;
+      }
+      
+      .thank-you-container h1 {
+        font-size: 2.5rem;
+      }
+      
+      nav {
+        display: none;
+      }
+      
+      .btn-group {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+
+    /* Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .floating-element {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
   </style>
 </head>
 <body>
-  <h1>Thank You!</h1>
-  <p id="message">We appreciate your interest.</p>
-  <a href="index.html" class="btn-home">Back to Home</a>
+  <!-- Header -->
+  <header>
+    <a class="logo" href="index.html">
+      LUMINARY WEBCRAFT
+    </a>
+    <nav>
+      <a href="index.html#services">Services</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#career-packages">Career Documents</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+  </header>
 
+  <main>
+    <div class="thank-you-container">
+      <div class="thank-you-icon">✨</div>
+      <h1>Thank You!</h1>
+      <p>Your submission has been received and we're excited to work with you. We'll be in touch within 24 hours to discuss your project.</p>
+      
+      <div class="confirmation-details">
+        <h3>What Happens Next?</h3>
+        <ul>
+          <li><strong>Step 1:</strong> We'll review your requirements and contact you</li>
+          <li><strong>Step 2:</strong> We'll schedule a discovery call to discuss details</li>
+          <li><strong>Step 3:</strong> You'll receive a project proposal and timeline</li>
+          <li><strong>Step 4:</strong> Once approved, we'll begin your project!</li>
+        </ul>
+      </div>
+      
+      <div class="thank-you-visual">
+        <canvas id="threejs-canvas"></canvas>
+      </div>
+      
+      <div class="btn-group">
+        <a href="index.html" class="btn btn-primary">Return to Home</a>
+        <a href="index.html#contact" class="btn">Contact Support</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="footer-grid">
+      <div class="footer-column">
+        <h4>Services</h4>
+        <a href="index.html#services">Web Development</a>
+        <a href="index.html#services">UI/UX Design</a>
+        <a href="index.html#career-packages">Career Documents</a>
+        <a href="index.html#services">Maintenance</a>
+      </div>
+      <div class="footer-column">
+        <h4>Company</h4>
+        <a href="#">About Us</a>
+        <a href="#">Our Work</a>
+        <a href="#">Careers</a>
+        <a href="#">Blog</a>
+      </div>
+      <div class="footer-column">
+        <h4>Support</h4>
+        <a href="#">Help Center</a>
+        <a href="index.html#contact">Contact Us</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </div>
+      <div class="footer-column">
+        <h4>Contact</h4>
+        <a href="#">hello@luminarywebcraft.com</a>
+        <a href="#">+27 123 456 789</a>
+        <a href="#">Pietermaritzburg, SA</a>
+      </div>
+    </div>
+    <div class="copyright">
+      &copy; 2024 Luminary WebCraft. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Three.js Script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
-    function getQueryParam(param) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(param);
+    // Enhanced 3D Scene with Black & White Aesthetic
+    function init3DScene() {
+      const canvas = document.getElementById('threejs-canvas');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ 
+        canvas: canvas, 
+        antialias: true,
+        alpha: true 
+      });
+
+      renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+      renderer.setClearColor(0x000000, 0);
+
+      // White geometric elements - creating a celebration effect
+      const geometries = [
+        new THREE.IcosahedronGeometry(1.2, 0),
+        new THREE.TorusGeometry(0.8, 0.3, 16, 32),
+        new THREE.OctahedronGeometry(0.6, 0),
+        new THREE.BoxGeometry(0.7, 0.7, 0.7)
+      ];
+
+      const material = new THREE.MeshPhysicalMaterial({
+        color: 0xffffff,
+        metalness: 0.8,
+        roughness: 0.2,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.1,
+        emissive: 0x000000,
+        emissiveIntensity: 0.5
+      });
+
+      // Create multiple floating elements for a celebratory effect
+      const floatingElements = [];
+      geometries.forEach((geo, index) => {
+        const mesh = new THREE.Mesh(geo, material);
+        mesh.position.x = (Math.random() - 0.5) * 6;
+        mesh.position.y = (Math.random() - 0.5) * 4;
+        mesh.position.z = (Math.random() - 0.5) * 6;
+        scene.add(mesh);
+        floatingElements.push({
+          mesh: mesh,
+          speedX: (Math.random() - 0.5) * 0.01,
+          speedY: (Math.random() - 0.5) * 0.01,
+          speedZ: (Math.random() - 0.5) * 0.01,
+          rotationX: (Math.random() - 0.5) * 0.02,
+          rotationY: (Math.random() - 0.5) * 0.02
+        });
+      });
+
+      // Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+      scene.add(ambientLight);
+
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+      directionalLight.position.set(5, 5, 5);
+      scene.add(directionalLight);
+
+      const pointLight = new THREE.PointLight(0xffffff, 0.8, 100);
+      pointLight.position.set(10, 10, 10);
+      scene.add(pointLight);
+
+      camera.position.z = 8;
+
+      // Animation
+      function animate() {
+        requestAnimationFrame(animate);
+
+        floatingElements.forEach((element, index) => {
+          element.mesh.rotation.x += element.rotationX;
+          element.mesh.rotation.y += element.rotationY;
+          
+          // Floating motion
+          element.mesh.position.x += element.speedX;
+          element.mesh.position.y += element.speedY;
+          element.mesh.position.z += element.speedZ;
+          
+          // Bounce off imaginary walls
+          if (Math.abs(element.mesh.position.x) > 3) element.speedX *= -1;
+          if (Math.abs(element.mesh.position.y) > 2) element.speedY *= -1;
+          if (Math.abs(element.mesh.position.z) > 3) element.speedZ *= -1;
+          
+          // Add some floating up and down
+          element.mesh.position.y += Math.sin(Date.now() * 0.001 + index) * 0.005;
+        });
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+
+      // Handle resize
+      window.addEventListener('resize', () => {
+        camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+      });
     }
 
-    const plan = getQueryParam('plan') || 'your selected plan';
-    const payer = getQueryParam('payer') || '';
-    const reference = getQueryParam('reference') || '';
-
-    const msgElem = document.getElementById('message');
-    if(payer){
-      msgElem.textContent = `Thank you, ${payer}, for purchasing the ${plan} plan!`;
-    } else if(reference){
-      msgElem.textContent = `Payment successful! Your reference is: ${reference}. We will contact you soon.`;
-    } else {
-      msgElem.textContent = `Thank you for your interest in the ${plan} plan. We will contact you shortly.`;
-    }
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', init3DScene);
   </script>
 </body>
 </html>
