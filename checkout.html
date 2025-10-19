@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <script src="https://www.paypal.com/sdk/js?client-id=AbnehmutNV-xkh05VIuvvAB1xHckhJE-awA2hpDPOUL9o5tsNyu2ELj2DjSRuuoZvtV8s4oWH5ZemTQn&currency=USD"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
     :root {
       --pure-white: #ffffff;
@@ -23,8 +22,6 @@
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      animation: none !important;
-      transition: none !important;
     }
 
     html, body {
@@ -277,7 +274,6 @@
       font-size: 1.5rem;
       opacity: 0.7;
     }
-    /* Footer */
 
     /* Footer */
     footer {
@@ -305,6 +301,21 @@
         width: 100%;
         max-width: 100%;
       }
+    }
+
+    .error-message {
+      color: #ff4444;
+      background: rgba(255, 68, 68, 0.1);
+      border: 1px solid #ff4444;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+      display: none;
+    }
+
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -334,49 +345,53 @@
       <div class="checkout-box">
         <h2>Complete Your Purchase</h2>
         
+        <div id="errorMessage" class="error-message">
+          There was an error loading your selected plan. Please go back and select a plan again.
+        </div>
+        
         <div class="plan-details">
           <h3 id="planName">Selected Plan</h3>
           <div class="price-display">R<span id="planPrice">0</span></div>
           <p class="conversion-note">Approximately $<span id="usdPrice">0</span> USD</p>
         </div>
 
-        <form id="checkoutForm">
+        <!-- PayFast Form -->
+        <form action="https://www.payfast.co.za/eng/process" method="post" id="payfastForm">
+          <input type="hidden" name="merchant_id" value="15866158">
+          <input type="hidden" name="merchant_key" value="weccqyhwb3tms">
+          <input type="hidden" name="return_url" value="https://luminary-webcraft.vercel.app/thank-you.html">
+          <input type="hidden" name="cancel_url" value="https://luminary-webcraft.vercel.app/cancel.html">
+          <input type="hidden" name="notify_url" value="">
+          <input type="hidden" name="amount" id="payfastAmount" value="">
+          <input type="hidden" name="item_name" id="itemName" value="">
+          <input type="hidden" name="email_address" id="payfastEmail" value="">
+          <input type="hidden" name="name_first" id="firstName" value="">
+          <input type="hidden" name="name_last" id="lastName" value="">
+          
           <div class="form-group">
-            <label for="clientEmail">Email Address</label>
+            <label for="clientEmail">Email Address *</label>
             <input type="email" id="clientEmail" class="form-control" placeholder="your.email@example.com" required />
           </div>
 
           <div class="form-group">
-            <label for="clientName">Full Name</label>
+            <label for="clientName">Full Name *</label>
             <input type="text" id="clientName" class="form-control" placeholder="John Smith" required />
           </div>
-
-          <!-- PayFast Form -->
-          <form action="https://www.payfast.co.za/eng/process" method="post">
-            <input type="hidden" name="merchant_id" value="15866158">
-            <input type="hidden" name="merchant_key" value="weccqyhwb3tms">
-            <input type="hidden" name="return_url" value="https://yourdomain.com/thank-you.html">
-            <input type="hidden" name="cancel_url" value="https://yourdomain.com/cancelled.html">
-            <input type="hidden" name="notify_url" value="https://yourdomain.com/notify.php">
-            <input type="hidden" name="amount" id="payfastAmount" value="">
-            <input type="hidden" name="item_name" id="itemName" value="">
-            <input type="hidden" name="email_address" id="payfastEmail" value="">
-            
-            <div class="btn-group">
-              <button type="submit" class="btn btn-payfast">Pay with PayFast</button>
-            </div>
-          </form>
-
-          <div class="payment-methods">
-            <h4>Or pay with</h4>
-            <div id="paypal-button-container"></div>
-            <div class="payment-icons">
-              <span class="payment-icon">💳</span>
-              <span class="payment-icon">🔒</span>
-              <span class="payment-icon">🌍</span>
-            </div>
+          
+          <div class="btn-group">
+            <button type="submit" class="btn btn-payfast" id="payfastButton">Pay with PayFast</button>
           </div>
         </form>
+
+        <div class="payment-methods">
+          <h4>Or pay with</h4>
+          <div id="paypal-button-container"></div>
+          <div class="payment-icons">
+            <span class="payment-icon"></span>
+            <span class="payment-icon"></span>
+            <span class="payment-icon"></span>
+          </div>
+        </div>
       </div>
     </div>
   </main>
@@ -394,75 +409,251 @@
       return urlParams.get(param);
     }
 
-    const plan = getQueryParam('plan') || 'Unknown Plan';
-    const priceStr = getQueryParam('price') || '0';
-    const price = parseFloat(priceStr);
-    const planDisplay = document.getElementById('planName');
-    const priceDisplay = document.getElementById('planPrice');
-    const usdDisplay = document.getElementById('usdPrice');
-    const payfastAmount = document.getElementById('payfastAmount');
-    const itemName = document.getElementById('itemName');
-    const payfastEmail = document.getElementById('payfastEmail');
-
-    let convertedUSD = 0;
-
-    planDisplay.textContent = plan;
-    priceDisplay.textContent = price > 0 ? price : 'Custom Quote - Please Contact Us';
-
-    if (price <= 0) {
-      document.querySelector('.btn-payfast').style.display = 'none';
-      document.getElementById('paypal-button-container').innerHTML = '<p style="color:var(--gray-200);">Custom plans require contacting us for a quote. Please email hello@luminarywebcraft.com</p>';
+    function showError(message) {
+      const errorDiv = document.getElementById('errorMessage');
+      errorDiv.textContent = message;
+      errorDiv.style.display = 'block';
     }
 
-    // Fetch exchange rate and setup PayPal
-    fetch('https://api.exchangerate-api.com/v4/latest/ZAR')
-      .then(res => res.json())
-      .then(data => {
-        const rate = data.rates.USD;
-        convertedUSD = (price * rate).toFixed(2);
-        usdDisplay.textContent = convertedUSD;
+    function hideError() {
+      document.getElementById('errorMessage').style.display = 'none';
+    }
 
-        if (price > 0) {
-          paypal.Buttons({
-            style: {
-              shape: 'rect',
-              color: 'black',
-              layout: 'vertical',
-              label: 'paypal'
-            },
-            createOrder: function (data, actions) {
-              return actions.order.create({
-                purchase_units: [{
-                  amount: { 
-                    value: convertedUSD,
-                    currency_code: 'USD'
-                  },
-                  description: `Luminary WebCraft - ${plan} Plan`
-                }]
-              });
-            },
-            onApprove: function (data, actions) {
-              return actions.order.capture().then(function (details) {
-                window.location.href = `thank-you.html?plan=${encodeURIComponent(plan)}&payer=${details.payer.name.given_name}`;
-              });
+    function initializeCheckout() {
+      console.log('Initializing checkout...');
+      
+      // Debug: Log all URL parameters
+      console.log('Full URL:', window.location.href);
+      const urlParams = new URLSearchParams(window.location.search);
+      console.log('All URL parameters:');
+      for (let [key, value] of urlParams) {
+        console.log(key + ': ' + value);
+      }
+
+      const plan = getQueryParam('plan');
+      const priceStr = getQueryParam('price');
+      
+      console.log('Processing plan:', plan, 'price:', priceStr);
+
+      // Check if parameters exist
+      if (!plan || !priceStr) {
+        showError('No plan selected. Please go back and select a plan to continue.');
+        const payfastButton = document.getElementById('payfastButton');
+        const paypalContainer = document.getElementById('paypal-button-container');
+        
+        if (payfastButton) payfastButton.style.display = 'none';
+        if (paypalContainer) paypalContainer.innerHTML = 
+          '<p style="color:var(--gray-200);">Please select a plan from our pricing page.</p>';
+        return;
+      }
+
+      const price = parseFloat(priceStr);
+      
+      // Check if price is valid
+      if (isNaN(price) || price <= 0) {
+        showError('Invalid plan price. Please contact us for custom quotes.');
+        const payfastButton = document.getElementById('payfastButton');
+        const paypalContainer = document.getElementById('paypal-button-container');
+        
+        if (payfastButton) payfastButton.style.display = 'none';
+        if (paypalContainer) paypalContainer.innerHTML = 
+          '<p style="color:var(--gray-200);">Custom plans require contacting us for a quote. Please email luminarywebcraft@gmail.com</p>';
+        return;
+      }
+
+      // Update display elements
+      const planDisplay = document.getElementById('planName');
+      const priceDisplay = document.getElementById('planPrice');
+      const usdDisplay = document.getElementById('usdPrice');
+      const payfastAmount = document.getElementById('payfastAmount');
+      const itemName = document.getElementById('itemName');
+
+      if (planDisplay && priceDisplay && usdDisplay && payfastAmount && itemName) {
+        console.log('Updating display with plan:', plan, 'price:', price);
+        planDisplay.textContent = plan;
+        priceDisplay.textContent = price.toLocaleString();
+        
+        // Set PayFast values
+        payfastAmount.value = price.toFixed(2);
+        itemName.value = `Luminary WebCraft - ${plan}`;
+
+        hideError();
+        
+        // Fetch exchange rate and setup PayPal
+        updateUSDConversion(price, plan);
+      } else {
+        console.error('One or more DOM elements not found');
+        showError('Page loading error. Please refresh and try again.');
+      }
+
+      // Setup form handlers
+      setupFormHandlers();
+    }
+
+    function updateUSDConversion(price, plan) {
+      const usdDisplay = document.getElementById('usdPrice');
+      
+      console.log('Fetching exchange rate for price:', price);
+      
+      // Use a reliable exchange rate API
+      fetch('https://api.exchangerate.host/latest?base=ZAR&symbols=USD')
+        .then(res => {
+          if (!res.ok) throw new Error('Network response was not ok');
+          return res.json();
+        })
+        .then(data => {
+          console.log('Exchange rate data:', data);
+          if (data.success && data.rates && data.rates.USD) {
+            const convertedUSD = (price * data.rates.USD).toFixed(2);
+            usdDisplay.textContent = convertedUSD;
+            console.log('Converted USD:', convertedUSD);
+            initializePayPal(price, plan, convertedUSD);
+          } else {
+            throw new Error('Invalid API response');
+          }
+        })
+        .catch(err => {
+          console.log('Using fallback exchange rate:', err);
+          // Fallback conversion rate
+          const fallbackRate = 0.054;
+          const convertedUSD = (price * fallbackRate).toFixed(2);
+          usdDisplay.textContent = convertedUSD + ' (estimated)';
+          console.log('Fallback converted USD:', convertedUSD);
+          initializePayPal(price, plan, convertedUSD);
+        });
+    }
+
+    function initializePayPal(price, plan, convertedUSD) {
+      const paypalContainer = document.getElementById('paypal-button-container');
+      
+      if (!paypalContainer) {
+        console.error('PayPal container not found');
+        return;
+      }
+
+      console.log('Initializing PayPal with amount:', convertedUSD);
+
+      try {
+        paypal.Buttons({
+          style: {
+            shape: 'rect',
+            color: 'black',
+            layout: 'vertical',
+            label: 'paypal'
+          },
+          createOrder: function (data, actions) {
+            const email = document.getElementById('clientEmail')?.value;
+            const name = document.getElementById('clientName')?.value;
+            
+            if (!email || !name) {
+              alert('Please enter your email and name before proceeding with PayPal.');
+              return;
             }
-          }).render('#paypal-button-container');
-        }
-      })
-      .catch(err => {
-        usdDisplay.textContent = 'Unavailable';
-        console.error('Exchange rate fetch failed:', err);
-      });
+            
+            return actions.order.create({
+              purchase_units: [{
+                amount: { 
+                  value: convertedUSD,
+                  currency_code: 'USD'
+                },
+                description: `Luminary WebCraft - ${plan}`
+              }]
+            });
+          },
+          onApprove: function (data, actions) {
+            return actions.order.capture().then(function (details) {
+              const email = document.getElementById('clientEmail')?.value || '';
+              const name = document.getElementById('clientName')?.value || '';
+              
+              console.log('PayPal payment completed:', details);
+              window.location.href = `thank-you.html?plan=${encodeURIComponent(plan)}&payer=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&payment=paypal&amount=${price}`;
+            });
+          },
+          onError: function (err) {
+            console.error('PayPal Error:', err);
+            alert('There was an error with PayPal. Please try PayFast or contact us.');
+          }
+        }).render('#paypal-button-container');
+      } catch (error) {
+        console.error('PayPal initialization failed:', error);
+        paypalContainer.innerHTML = '<p style="color:var(--gray-200);">PayPal is currently unavailable. Please use PayFast.</p>';
+      }
+    }
 
-    // Update PayFast form with user data
-    document.getElementById('clientEmail').addEventListener('input', function () {
-      payfastEmail.value = this.value.trim();
+    function setupFormHandlers() {
+      const clientEmail = document.getElementById('clientEmail');
+      const clientName = document.getElementById('clientName');
+      const payfastEmail = document.getElementById('payfastEmail');
+      const firstName = document.getElementById('firstName');
+      const lastName = document.getElementById('lastName');
+      const payfastForm = document.getElementById('payfastForm');
+      const payfastButton = document.getElementById('payfastButton');
+
+      if (clientEmail && payfastEmail) {
+        clientEmail.addEventListener('input', function () {
+          payfastEmail.value = this.value.trim();
+        });
+      }
+
+      if (clientName && firstName && lastName) {
+        clientName.addEventListener('input', function () {
+          const names = this.value.trim().split(' ');
+          firstName.value = names[0] || '';
+          lastName.value = names.slice(1).join(' ') || '';
+        });
+      }
+
+      if (payfastForm && payfastButton) {
+        payfastForm.addEventListener('submit', function(e) {
+          const email = document.getElementById('clientEmail')?.value;
+          const name = document.getElementById('clientName')?.value;
+          
+          if (!email || !name) {
+            e.preventDefault();
+            alert('Please fill in your email and name before proceeding.');
+            return;
+          }
+          
+          // Validate email format
+          if (!isValidEmail(email)) {
+            e.preventDefault();
+            alert('Please enter a valid email address.');
+            return;
+          }
+          
+          console.log('Submitting PayFast form with email:', email, 'name:', name);
+          
+          // Set the email for PayFast
+          if (payfastEmail) {
+            payfastEmail.value = email;
+          }
+          
+          // Show loading state
+          payfastButton.textContent = 'Redirecting to PayFast...';
+          payfastButton.disabled = true;
+          payfastButton.classList.add('loading');
+        });
+      }
+    }
+
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded, initializing checkout...');
+      initializeCheckout();
     });
 
-    window.addEventListener('DOMContentLoaded', () => {
-      if (price > 0) {
-        payfastAmount.value = price.toFixed(2);
-        itemName.value = `Luminary WebCraft - ${plan} Plan`;
+    // Fallback initialization
+    window.addEventListener('load', function() {
+      console.log('Window loaded');
+      // If for some reason the plan is still showing "Selected Plan", try again
+      if (document.getElementById('planName') && document.getElementById('planName').textContent === 'Selected Plan') {
+        console.log('Fallback initialization triggered');
+        setTimeout(initializeCheckout, 100);
       }
     });
   </script>
