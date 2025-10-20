@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refund Policy - Luminary WebCraft</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pure-white: #ffffff;
+            --pure-black: #000000;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-800: #262626;
+            --gray-900: #171717;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background: var(--pure-black);
+            color: var(--pure-white);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: rgba(0, 0, 0, 0.9);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--gray-800);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--pure-white);
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--gray-200);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--pure-white);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--pure-white);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 160px);
+            padding: 4rem 2rem;
+        }
+
+        .policy-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--gray-900);
+            border: 1px solid var(--gray-800);
+            padding: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--pure-white) 0%, var(--gray-200) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--pure-white);
+            border-bottom: 1px solid var(--gray-800);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.5rem;
+            color: var(--pure-white);
+        }
+
+        .last-updated {
+            color: var(--gray-200);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        ul {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-800);
+            color: var(--gray-200);
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        strong {
+            color: var(--pure-white);
+            font-weight: 600;
+        }
+
+        p {
+            margin: 1rem 0;
+            color: var(--gray-200);
+        }
+
+        .refund-tier {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--gray-800);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border: 2px solid var(--pure-white);
+            background: transparent;
+            color: var(--pure-white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 0;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+            background: var(--pure-white);
+            color: var(--pure-black);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-900);
+            padding: 2rem;
+            border-top: 1px solid var(--gray-800);
+            text-align: center;
+        }
+
+        .copyright {
+            color: var(--gray-200);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .policy-container {
+                padding: 2rem 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a class="logo" href="index.html">
+            LUMINARY WEBCRAFT
+        </a>
+        <nav>
+            <a href="index.html#services">Services</a>
+            <a href="index.html#pricing">Pricing</a>
+            <a href="index.html#career-packages">Career Documents</a>
+            <a href="index.html#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="policy-container">
+            <h1>Refund Policy</h1>
+            <p class="last-updated">Last Updated: January 2024</p>
+            
+            <h2>Overview</h2>
+            <p>At Luminary WebCraft, we strive to deliver exceptional quality in all our services. We understand that circumstances may change, and we have designed this refund policy to be fair to both our clients and our business.</p>
+            
+            <h2>Refund Eligibility</h2>
+            
+            <div class="refund-tier">
+                <h3>Web Development Services</h3>
+                <ul>
+                    <li><strong>100% Refund:</strong> Available if cancellation occurs before project kickoff and no work has commenced.</li>
+                    <li><strong>Partial Refund:</strong> Calculated based on work completed vs. work remaining. Project manager will provide detailed breakdown.</li>
+                    <li><strong>No Refund:</strong> After project completion and final delivery. This includes bug fixes covered under warranty period.</li>
+                </ul>
+            </div>
+
+            <div class="refund-tier">
+                <h3>Career Document Services</h3>
+                <ul>
+                    <li><strong>100% Refund:</strong> Before research phase begins.</li>
+                    <li><strong>75% Refund:</strong> During research phase but before draft creation.</li>
+                    <li><strong>50% Refund:</strong> After first draft delivery but before final delivery.</li>
+                    <li><strong>No Refund:</strong> After final document delivery and revision period completion.</li>
+                </ul>
+            </div>
+
+            <div class="refund-tier">
+                <h3>Digital Products & Templates</h3>
+                <ul>
+                    <li><strong>100% Refund:</strong> If product hasn't been downloaded within 24 hours of purchase.</li>
+                    <li><strong>No Refund:</strong> After digital product download due to the nature of digital goods.</li>
+                </ul>
+            </div>
+
+            <h2>Non-Refundable Items</h2>
+            <ul>
+                <li>Custom domain names and third-party service fees</li>
+                <li>Hosting services already activated</li>
+                <li>SSL certificates and security services</li>
+                <li>Any third-party software licenses purchased on client's behalf</li>
+                <li>Services marked as "non-refundable" at time of purchase</li>
+            </ul>
+
+            <h2>Refund Processing</h2>
+            <ul>
+                <li><strong>Processing Time:</strong> 7-10 business days from approval date</li>
+                <li><strong>Method:</strong> Refund will be issued to original payment method</li>
+                <li><strong>Notification:</strong> You will receive email confirmation once refund is processed</li>
+                <li><strong>Bank Processing:</strong> Additional 3-5 business days may be required by your financial institution</li>
+            </ul>
+
+            <h2>How to Request a Refund</h2>
+            <p>To request a refund, please contact us with the following information:</p>
+            <ul>
+                <li>Full name and contact information</li>
+                <li>Order number and date of purchase</li>
+                <li>Detailed reason for refund request</li>
+                <li>Any supporting documentation</li>
+            </ul>
+            <p><strong>Email:</strong> luminarywebcraft@gmail.com</p>
+            <p><strong>Response Time:</strong> We will respond to all refund requests within 2 business days.</p>
+
+            <h2>Dispute Resolution</h2>
+            <p>If you are unsatisfied with our refund decision, you may request a review by our management team. We are committed to finding fair solutions for all parties involved.</p>
+
+            <h2>Contact Information</h2>
+            <p>For any questions about our Refund Policy, please contact us:</p>
+            <p><strong>Email:</strong> luminarywebcraft@gmail.com</p>
+            <p><strong>Phone:</strong> +27 72 292 2195</p>
+            <p><strong>Business Hours:</strong> Monday-Friday, 9:00 AM - 5:00 PM SAST</p>
+            
+            <a href="index.html" class="btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Return to Home
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="copyright">
+            &copy; 2025 Luminary WebCraft. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cancellation Policy - Luminary WebCraft</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pure-white: #ffffff;
+            --pure-black: #000000;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-800: #262626;
+            --gray-900: #171717;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background: var(--pure-black);
+            color: var(--pure-white);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: rgba(0, 0, 0, 0.9);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--gray-800);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--pure-white);
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--gray-200);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--pure-white);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--pure-white);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 160px);
+            padding: 4rem 2rem;
+        }
+
+        .policy-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--gray-900);
+            border: 1px solid var(--gray-800);
+            padding: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--pure-white) 0%, var(--gray-200) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--pure-white);
+            border-bottom: 1px solid var(--gray-800);
+            padding-bottom: 0.5rem;
+        }
+
+        .last-updated {
+            color: var(--gray-200);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        ul {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-800);
+            color: var(--gray-200);
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        strong {
+            color: var(--pure-white);
+            font-weight: 600;
+        }
+
+        p {
+            margin: 1rem 0;
+            color: var(--gray-200);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border: 2px solid var(--pure-white);
+            background: transparent;
+            color: var(--pure-white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 0;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+            background: var(--pure-white);
+            color: var(--pure-black);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-900);
+            padding: 2rem;
+            border-top: 1px solid var(--gray-800);
+            text-align: center;
+        }
+
+        .copyright {
+            color: var(--gray-200);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .policy-container {
+                padding: 2rem 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <a class="logo" href="index.html">
+            LUMINARY WEBCRAFT
+        </a>
+        <nav>
+            <a href="index.html#services">Services</a>
+            <a href="index.html#pricing">Pricing</a>
+            <a href="index.html#career-packages">Career Documents</a>
+            <a href="index.html#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="policy-container">
+            <h1>Cancellation Policy</h1>
+            <p class="last-updated">Last Updated: January 2024</p>
+            
+            <h2>Web Development Services</h2>
+            <ul>
+                <li><strong>Before Project Start:</strong> Full refund of deposit if cancellation occurs before any work has commenced.</li>
+                <li><strong>After Project Start:</strong> Refund of unused portion minus the value of work completed to date.</li>
+                <li><strong>After Delivery:</strong> No refunds for completed and delivered work.</li>
+                <li><strong>Project Abandonment:</strong> Projects inactive for 30+ days may be subject to cancellation with forfeiture of deposit.</li>
+            </ul>
+            
+            <h2>Career Document Services</h2>
+            <ul>
+                <li><strong>Before Research Phase:</strong> Full refund if cancelled before research begins.</li>
+                <li><strong>After Research Begins:</strong> 75% refund if cancelled during the research phase.</li>
+                <li><strong>After Draft Delivery:</strong> 50% refund if cancelled after first draft is delivered.</li>
+                <li><strong>After Final Delivery:</strong> No refunds after final documents are delivered.</li>
+                <li><strong>Revision Period:</strong> Cancellations not accepted during active revision periods.</li>
+            </ul>
+            
+            <h2>Digital Products & Templates</h2>
+            <ul>
+                <li><strong>Before Download:</strong> Full refund if product hasn't been downloaded.</li>
+                <li><strong>After Download:</strong> No refunds for digital products once downloaded due to the nature of digital goods.</li>
+            </ul>
+            
+            <h2>How to Cancel</h2>
+            <p>All cancellation requests must be submitted in writing to:</p>
+            <p><strong>Email:</strong> luminarywebcraft@gmail.com</p>
+            <p><strong>Subject Line:</strong> Cancellation Request - [Your Name/Order Number]</p>
+            <p>Please include your full name, order number, and reason for cancellation. We will process your request within 3-5 business days.</p>
+            
+            <h2>Processing Time</h2>
+            <p>Refunds will be processed within 7-10 business days from approval date. The refund will be issued to the original payment method.</p>
+            
+            <a href="index.html" class="btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Return to Home
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="copyright">
+            &copy; 2025 Luminary WebCraft. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>
