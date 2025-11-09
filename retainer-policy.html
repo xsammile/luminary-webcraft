@@ -1,91 +1,414 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Website Maintenance Retainer | Luminary WebCraft</title>
-    <link rel="stylesheet" href="luminary.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Maintenance Retainer Policy - Luminary WebCraft</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pure-white: #ffffff;
+            --pure-black: #000000;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-800: #262626;
+            --gray-900: #171717;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
+        html, body {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background: var(--pure-black);
+            color: var(--pure-white);
+            line-height: 1.6;
+        }
 
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: rgba(0, 0, 0, 0.9);
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--gray-800);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--pure-white);
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--gray-200);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--pure-white);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--pure-white);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 160px);
+            padding: 4rem 2rem;
+        }
+
+        .policy-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--gray-900);
+            border: 1px solid var(--gray-800);
+            padding: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--pure-white) 0%, var(--gray-200) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--pure-white);
+            border-bottom: 1px solid var(--gray-800);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.5rem;
+            color: var(--pure-white);
+        }
+
+        .last-updated {
+            color: var(--gray-200);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        ul {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--gray-800);
+            color: var(--gray-200);
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        strong {
+            color: var(--pure-white);
+            font-weight: 600;
+        }
+
+        p {
+            margin: 1rem 0;
+            color: var(--gray-200);
+        }
+
+        /* Table Styling */
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--gray-800);
+        }
+
+        .styled-table th {
+            background: var(--gray-800);
+            color: var(--pure-white);
+            font-weight: 600;
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-800);
+        }
+
+        .styled-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-800);
+            color: var(--gray-200);
+        }
+
+        .styled-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .styled-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .plan-highlight {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-left: 3px solid var(--pure-white);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border: 2px solid var(--pure-white);
+            background: transparent;
+            color: var(--pure-white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 0;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+            background: var(--pure-white);
+            color: var(--pure-black);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray-900);
+            padding: 2rem;
+            border-top: 1px solid var(--gray-800);
+            text-align: center;
+        }
+
+        .copyright {
+            color: var(--gray-200);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .policy-container {
+                padding: 2rem 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            nav {
+                display: none;
+            }
+            
+            .styled-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Website Maintenance & Support Retainer Agreement</h1>
-    <p><strong>Effective Date:</strong> July 2025</p>
+    <!-- Header -->
+    <header>
+        <a class="logo" href="index.html">
+            LUMINARY WEBCRAFT
+        </a>
+        <nav>
+            <a href="index.html#services">Services</a>
+            <a href="index.html#pricing">Pricing</a>
+            <a href="index.html#career-packages">Career Documents</a>
+            <a href="index.html#contact">Contact</a>
+        </nav>
+    </header>
 
-    <h2>1. Scope of Services</h2>
-    <p>Luminary WebCraft agrees to provide the following ongoing services:</p>
-    <ul>
-        <li>Regular updates to CMS, plugins, and themes</li>
-        <li>Scheduled website backups and security scans</li>
-        <li>Uptime and performance monitoring</li>
-        <li>Minor content and image updates (as per selected plan)</li>
-        <li>Monthly reporting (Professional and Elite plans)</li>
-        <li>SEO checks (Elite and Enterprise plans)</li>
-    </ul>
-    <p>Additional services beyond scope will be billed separately or may require a retainer plan upgrade.</p>
+    <main>
+        <div class="policy-container">
+            <h1>Website Maintenance Retainer Policy</h1>
+            <p class="last-updated">Effective Date: July 2025</p>
+            
+            <h2>1. Scope of Services</h2>
+            <p>Luminary WebCraft agrees to provide the following ongoing services based on your selected plan:</p>
+            <ul>
+                <li><strong>Regular Updates:</strong> CMS, plugins, and theme updates to ensure security and functionality</li>
+                <li><strong>Security Monitoring:</strong> Scheduled security scans and malware detection</li>
+                <li><strong>Backup Management:</strong> Regular website backups and disaster recovery planning</li>
+                <li><strong>Performance Monitoring:</strong> Uptime monitoring and performance optimization</li>
+                <li><strong>Content Updates:</strong> Minor content and image updates (as per selected plan)</li>
+                <li><strong>Monthly Reporting:</strong> Performance and security reports (Professional and Elite plans)</li>
+                <li><strong>SEO Maintenance:</strong> Regular SEO checks and optimizations (Elite and Enterprise plans)</li>
+            </ul>
+            <p>Additional services beyond the defined scope will be billed separately or may require an upgrade to your retainer plan.</p>
 
-    <h2>2. Plans & Pricing (ZAR)</h2>
-    <table class="styled-table">
-        <tr>
-            <th>Plan Name</th>
-            <th>Monthly Fee</th>
-            <th>Included Edits</th>
-            <th>SEO & Reports</th>
-            <th>Priority Support</th>
-        </tr>
-        <tr>
-            <td>Starter</td>
-            <td>R499</td>
-            <td>None</td>
-            <td>No</td>
-            <td>No</td>
-        </tr>
-        <tr>
-            <td>Professional</td>
-            <td>R999</td>
-            <td>2 per month</td>
-            <td>Yes</td>
-            <td>Medium</td>
-        </tr>
-        <tr>
-            <td>Elite</td>
-            <td>R1,999</td>
-            <td>4 per month</td>
-            <td>Yes</td>
-            <td>High</td>
-        </tr>
-        <tr>
-            <td>Enterprise</td>
-            <td>R3,000+</td>
-            <td>Unlimited (Fair Use)</td>
-            <td>Yes</td>
-            <td>Top Priority</td>
-        </tr>
-    </table>
-    <p>Annual payment option available at a 10% discount.</p>
+            <h2>2. Plans & Pricing</h2>
+            <table class="styled-table">
+                <tr>
+                    <th>Plan Name</th>
+                    <th>Monthly Fee (ZAR)</th>
+                    <th>Included Edits</th>
+                    <th>SEO & Reports</th>
+                    <th>Support Level</th>
+                </tr>
+                <tr>
+                    <td>Starter</td>
+                    <td>R499</td>
+                    <td>None</td>
+                    <td>No</td>
+                    <td>Standard</td>
+                </tr>
+                <tr class="plan-highlight">
+                    <td>Professional</td>
+                    <td>R999</td>
+                    <td>2 per month</td>
+                    <td>Basic Reports</td>
+                    <td>Medium Priority</td>
+                </tr>
+                <tr>
+                    <td>Elite</td>
+                    <td>R1,999</td>
+                    <td>4 per month</td>
+                    <td>Comprehensive Reports</td>
+                    <td>High Priority</td>
+                </tr>
+                <tr>
+                    <td>Enterprise</td>
+                    <td>R3,000+</td>
+                    <td>Unlimited (Fair Use)</td>
+                    <td>Advanced Analytics</td>
+                    <td>Top Priority</td>
+                </tr>
+            </table>
+            <p><strong>Annual Payment Option:</strong> Save 10% with annual prepayment. Contact us for annual pricing.</p>
 
-    <h2>3. Payment Terms</h2>
-    <ul>
-        <li>Fees are payable monthly in advance</li>
-        <li>Payments are due on the 1st of each month via EFT, Payfast, or PayPal</li>
-        <li>Late payments may result in paused services until resolved</li>
-    </ul>
+            <h2>3. Payment Terms</h2>
+            <ul>
+                <li><strong>Billing Cycle:</strong> Fees are payable monthly in advance</li>
+                <li><strong>Payment Methods:</strong> EFT, PayFast, or PayPal</li>
+                <li><strong>Due Date:</strong> Payments are due on the 1st of each month</li>
+                <li><strong>Late Payments:</strong> Services may be paused if payment is more than 14 days overdue</li>
+                <li><strong>Price Changes:</strong> We reserve the right to adjust pricing with 30 days notice</li>
+            </ul>
 
-    <h2>4. Term & Termination</h2>
-    <p>This agreement operates on a month-to-month basis unless an annual plan is selected. Either party may terminate the agreement with 30 days written notice. No refunds will be issued for partial months.</p>
+            <h2>4. Term & Termination</h2>
+            <ul>
+                <li><strong>Contract Term:</strong> Month-to-month basis unless annual plan selected</li>
+                <li><strong>Notice Period:</strong> 30 days written notice required for termination</li>
+                <li><strong>Pro-rated Refunds:</strong> No refunds for partial months of service</li>
+                <li><strong>Service Continuity:</strong> All services will continue until the end of the paid period</li>
+            </ul>
 
-    <h2>5. Client Responsibilities</h2>
-    <ul>
-        <li>Provide timely access to required systems for updates</li>
-        <li>Respond to content update requests within a reasonable timeframe</li>
-    </ul>
+            <h2>5. Client Responsibilities</h2>
+            <ul>
+                <li>Provide timely access to required systems, hosting, and CMS for updates</li>
+                <li>Respond to content update requests and approval requests within 3 business days</li>
+                <li>Maintain active domain and hosting services</li>
+                <li>Provide clear instructions for content updates and changes</li>
+                <li>Notify us of any third-party integrations or changes that may affect the website</li>
+            </ul>
 
-    <h2>6. Limitation of Liability</h2>
-    <p>Luminary WebCraft shall not be held liable for data loss, downtime, or damages caused by third-party services, client actions, or external attacks, provided that industry-standard security and backups were in place.</p>
+            <h2>6. Service Level Agreement</h2>
+            <ul>
+                <li><strong>Response Time:</strong> Initial response within 24 hours during business hours</li>
+                <li><strong>Update Implementation:</strong> Content updates completed within 3-5 business days</li>
+                <li><strong>Emergency Fixes:</strong> Critical security issues addressed within 24 hours</li>
+                <li><strong>Business Hours:</strong> Monday-Friday, 9:00 AM - 5:00 PM SAST (excluding public holidays)</li>
+            </ul>
 
-    <h2>7. Agreement Acceptance</h2>
-    <p>By subscribing to a maintenance plan, the client agrees to the terms outlined in this agreement.</p>
+            <h2>7. Limitation of Liability</h2>
+            <p>Luminary WebCraft shall not be held liable for:</p>
+            <ul>
+                <li>Data loss, downtime, or damages caused by third-party services</li>
+                <li>Issues resulting from client actions or modifications</li>
+                <li>External attacks, provided industry-standard security measures were in place</li>
+                <li>Consequential or incidental damages arising from service interruptions</li>
+            </ul>
+            <p>Our liability is limited to the amount paid for services during the previous 3-month period.</p>
+
+            <h2>8. Out of Scope Services</h2>
+            <p>The following services are not included in maintenance retainers and will be billed separately:</p>
+            <ul>
+                <li>Major website redesign or restructuring</li>
+                <li>New feature development or custom programming</li>
+                <li>Graphic design or creation of new visual elements</li>
+                <li>Content writing or copy creation</li>
+                <li>SEO strategy development or keyword research</li>
+                <li>Social media management or marketing campaigns</li>
+            </ul>
+
+            <h2>9. Agreement Acceptance</h2>
+            <p>By subscribing to a maintenance plan, the client acknowledges they have read, understood, and agree to all terms outlined in this retainer agreement.</p>
+            <p>This agreement supersedes any prior verbal or written agreements regarding maintenance services.</p>
+
+            <h2>10. Contact Information</h2>
+            <p>For questions about this retainer policy or to discuss your maintenance needs:</p>
+            <p><strong>Email:</strong> luminarywebcraft@gmail.com</p>
+            <p><strong>Phone:</strong> +27 72 292 2195</p>
+            <p><strong>Business Hours:</strong> Monday-Friday, 9:00 AM - 5:00 PM SAST</p>
+            
+            <a href="index.html" class="btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Return to Home
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="copyright">
+            &copy; 2025 Luminary WebCraft. All rights reserved.
+        </div>
+    </footer>
 </body>
 </html>

@@ -7,6 +7,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <script src="https://www.paypal.com/sdk/js?client-id=AbnehmutNV-xkh05VIuvvAB1xHckhJE-awA2hpDPOUL9o5tsNyu2ELj2DjSRuuoZvtV8s4oWH5ZemTQn&currency=USD"></script>
+  <script src="https://js.paystack.co/v2/inline.js"></script>
+  
   <style>
     :root {
       --pure-white: #ffffff;
@@ -243,6 +245,12 @@
       color: var(--pure-white);
     }
 
+    .btn-paystack {
+      background: #0BA4DB;
+      border-color: #0BA4DB;
+      color: var(--pure-white);
+    }
+
     .btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
@@ -317,6 +325,43 @@
       opacity: 0.7;
       pointer-events: none;
     }
+    
+    .payment-note {
+      color: var(--gray-200);
+      font-size: 0.8rem;
+      margin-top: 1rem;
+      font-style: italic;
+    }
+    
+    .service-notice {
+      background: rgba(255, 153, 0, 0.1);
+      border: 1px solid #ff9900;
+      color: #ff9900;
+      padding: 0.75rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      text-align: left;
+    }
+    
+    .service-notice strong {
+      color: #ff9900;
+    }
+    
+    .info-notice {
+      background: rgba(0, 123, 255, 0.1);
+      border: 1px solid #007bff;
+      color: #007bff;
+      padding: 0.75rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      text-align: left;
+    }
+    
+    .info-notice strong {
+      color: #007bff;
+    }
   </style>
 </head>
 <body>
@@ -355,42 +400,69 @@
           <p class="conversion-note">Approximately $<span id="usdPrice">0</span> USD</p>
         </div>
 
-        <!-- PayFast Form -->
-        <form action="https://www.payfast.co.za/eng/process" method="post" id="payfastForm">
-          <input type="hidden" name="merchant_id" value="15866158">
-          <input type="hidden" name="merchant_key" value="weccqyhwb3tms">
-          <input type="hidden" name="return_url" value="https://luminary-webcraft.vercel.app/thank-you.html">
-          <input type="hidden" name="cancel_url" value="https://luminary-webcraft.vercel.app/cancel.html">
-          <input type="hidden" name="notify_url" value="">
-          <input type="hidden" name="amount" id="payfastAmount" value="">
-          <input type="hidden" name="item_name" id="itemName" value="">
-          <input type="hidden" name="email_address" id="payfastEmail" value="">
-          <input type="hidden" name="name_first" id="firstName" value="">
-          <input type="hidden" name="name_last" id="lastName" value="">
-          
-          <div class="form-group">
-            <label for="clientEmail">Email Address *</label>
-            <input type="email" id="clientEmail" class="form-control" placeholder="your.email@example.com" required />
-          </div>
+        <div class="form-group">
+          <label for="clientEmail">Email Address *</label>
+          <input type="email" id="clientEmail" class="form-control" placeholder="your.email@example.com" required />
+        </div>
 
-          <div class="form-group">
-            <label for="clientName">Full Name *</label>
-            <input type="text" id="clientName" class="form-control" placeholder="John Smith" required />
-          </div>
-          
-          <div class="btn-group">
-            <button type="submit" class="btn btn-payfast" id="payfastButton">Pay with PayFast</button>
-          </div>
-        </form>
+        <div class="form-group">
+          <label for="clientName">Full Name *</label>
+          <input type="text" id="clientName" class="form-control" placeholder="John Smith" required />
+        </div>
 
         <div class="payment-methods">
-          <h4>Or pay with</h4>
+          <h4>Choose Payment Method</h4>
+          
+          <!-- Paystack Button - FIRST -->
+          <div class="btn-group">
+            <button type="button" class="btn btn-paystack" id="paystackButton">
+              Pay with Paystack
+            </button>
+          </div>
+
+          <!-- PayFast Form - SECOND -->
+          <form action="https://www.payfast.co.za/eng/process" method="post" id="payfastForm">
+            <input type="hidden" name="merchant_id" value="15866158">
+            <input type="hidden" name="merchant_key" value="weccqyhwb3tms">
+            <input type="hidden" name="return_url" value="https://luminary-webcraft.vercel.app/thank-you.html">
+            <input type="hidden" name="cancel_url" value="https://luminary-webcraft.vercel.app/cancel.html">
+            <input type="hidden" name="notify_url" value="">
+            <input type="hidden" name="amount" id="payfastAmount" value="">
+            <input type="hidden" name="item_name" id="itemName" value="">
+            <input type="hidden" name="email_address" id="payfastEmail" value="">
+            <input type="hidden" name="name_first" id="firstName" value="">
+            <input type="hidden" name="name_last" id="lastName" value="">
+            
+            <!-- Enhanced PayFast fields for better compatibility -->
+            <input type="hidden" name="currency" value="ZAR">
+            <input type="hidden" name="payment_method" value="cc">
+            
+            <div class="btn-group">
+              <button type="submit" class="btn btn-payfast" id="payfastButton">Pay with PayFast</button>
+            </div>
+            
+            <!-- PayFast Service Notices -->
+            <div class="service-notice">
+              <strong>⚠️ Service Notice:</strong> PayFast is currently experiencing issues with Standard Bank EFT payments. 
+              Please use credit card, debit card, or QR code payments as alternative methods.
+            </div>
+            
+            <div class="info-notice">
+              <strong>ℹ️ Infrastructure Update:</strong> PayFast is migrating to AWS. If you have server-side IP whitelisting, 
+              please update your firewall rules with the new AWS IP ranges by July 31, 2025.
+            </div>
+          </form>
+
+          <!-- PayPal - THIRD -->
           <div id="paypal-button-container"></div>
+          
           <div class="payment-icons">
             <span class="payment-icon"></span>
             <span class="payment-icon"></span>
             <span class="payment-icon"></span>
           </div>
+          
+          <p class="payment-note">All payment methods are secure and encrypted. Ports 80, 8080, 8081, and 443 are used for secure communication.</p>
         </div>
       </div>
     </div>
@@ -419,6 +491,84 @@
       document.getElementById('errorMessage').style.display = 'none';
     }
 
+    // Paystack payment functionality
+    function initializePaystack(price, plan, convertedUSD) {
+      const paystackButton = document.getElementById('paystackButton');
+      
+      if (!paystackButton) return;
+      
+      paystackButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('clientEmail').value;
+        const name = document.getElementById('clientName').value;
+        
+        if (!email || !name) {
+          alert('Please fill in your email and name before proceeding with Paystack.');
+          return;
+        }
+        
+        if (!isValidEmail(email)) {
+          alert('Please enter a valid email address.');
+          return;
+        }
+        
+        // Convert ZAR to kobo (Paystack uses kobo for NGN)
+        // Since you're dealing with ZAR, we'll use the amount in cents
+        const amountInCents = Math.round(price * 100);
+        
+        // Show loading state
+        paystackButton.textContent = 'Processing...';
+        paystackButton.disabled = true;
+        
+        // Initialize Paystack payment
+        const paystack = new PaystackPop();
+        paystack.newTransaction({
+          key: 'pk_live_b0e23eb460227971c46e2814c6b7b1a8977ba627',
+          email: email,
+          amount: amountInCents,
+          currency: 'ZAR',
+          ref: 'LW_' + Math.floor((Math.random() * 1000000000) + 1),
+          metadata: {
+            custom_fields: [
+              {
+                display_name: "Customer Name",
+                variable_name: "customer_name",
+                value: name
+              },
+              {
+                display_name: "Plan",
+                variable_name: "plan",
+                value: plan
+              }
+            ]
+          },
+          onSuccess: function(transaction) {
+            // Payment successful
+            console.log('Paystack payment successful:', transaction);
+            paystackButton.textContent = 'Payment Successful!';
+            
+            // Redirect to thank you page
+            window.location.href = `thank-you.html?plan=${encodeURIComponent(plan)}&payer=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&payment=paystack&amount=${price}&reference=${transaction.reference}`;
+          },
+          onCancel: function() {
+            // Payment cancelled
+            console.log('Paystack payment cancelled');
+            paystackButton.textContent = 'Pay with Paystack';
+            paystackButton.disabled = false;
+            alert('Payment was cancelled. Please try again if you wish to complete your purchase.');
+          },
+          onError: function(error) {
+            // Payment failed
+            console.error('Paystack payment error:', error);
+            paystackButton.textContent = 'Pay with Paystack';
+            paystackButton.disabled = false;
+            alert('Payment failed. Please try again or use another payment method.');
+          }
+        });
+      });
+    }
+
     function initializeCheckout() {
       console.log('Initializing checkout...');
       
@@ -440,8 +590,10 @@
         showError('No plan selected. Please go back and select a plan to continue.');
         const payfastButton = document.getElementById('payfastButton');
         const paypalContainer = document.getElementById('paypal-button-container');
+        const paystackButton = document.getElementById('paystackButton');
         
         if (payfastButton) payfastButton.style.display = 'none';
+        if (paystackButton) paystackButton.style.display = 'none';
         if (paypalContainer) paypalContainer.innerHTML = 
           '<p style="color:var(--gray-200);">Please select a plan from our pricing page.</p>';
         return;
@@ -454,8 +606,10 @@
         showError('Invalid plan price. Please contact us for custom quotes.');
         const payfastButton = document.getElementById('payfastButton');
         const paypalContainer = document.getElementById('paypal-button-container');
+        const paystackButton = document.getElementById('paystackButton');
         
         if (payfastButton) payfastButton.style.display = 'none';
+        if (paystackButton) paystackButton.style.display = 'none';
         if (paypalContainer) paypalContainer.innerHTML = 
           '<p style="color:var(--gray-200);">Custom plans require contacting us for a quote. Please email luminarywebcraft@gmail.com</p>';
         return;
@@ -479,7 +633,7 @@
 
         hideError();
         
-        // Fetch exchange rate and setup PayPal
+        // Fetch exchange rate and setup payment methods
         updateUSDConversion(price, plan);
       } else {
         console.error('One or more DOM elements not found');
@@ -507,6 +661,7 @@
             const convertedUSD = (price * data.rates.USD).toFixed(2);
             usdDisplay.textContent = convertedUSD;
             console.log('Converted USD:', convertedUSD);
+            initializePaystack(price, plan, convertedUSD);
             initializePayPal(price, plan, convertedUSD);
           } else {
             throw new Error('Invalid API response');
@@ -519,6 +674,7 @@
           const convertedUSD = (price * fallbackRate).toFixed(2);
           usdDisplay.textContent = convertedUSD + ' (estimated)';
           console.log('Fallback converted USD:', convertedUSD);
+          initializePaystack(price, plan, convertedUSD);
           initializePayPal(price, plan, convertedUSD);
         });
     }
@@ -571,12 +727,12 @@
           },
           onError: function (err) {
             console.error('PayPal Error:', err);
-            alert('There was an error with PayPal. Please try PayFast or contact us.');
+            alert('There was an error with PayPal. Please try Paystack or PayFast.');
           }
         }).render('#paypal-button-container');
       } catch (error) {
         console.error('PayPal initialization failed:', error);
-        paypalContainer.innerHTML = '<p style="color:var(--gray-200);">PayPal is currently unavailable. Please use PayFast.</p>';
+        paypalContainer.innerHTML = '<p style="color:var(--gray-200);">PayPal is currently unavailable. Please use Paystack or PayFast.</p>';
       }
     }
 
