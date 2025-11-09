@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/png" href="/favicon.png" />
   <script src="https://www.paypal.com/sdk/js?client-id=AbnehmutNV-xkh05VIuvvAB1xHckhJE-awA2hpDPOUL9o5tsNyu2ELj2DjSRuuoZvtV8s4oWH5ZemTQn&currency=USD"></script>
+  <script src="https://js.paystack.co/v1/inline.js"></script>
   <style>
     :root {
       --pure-white: #ffffff;
@@ -16,6 +17,8 @@
       --gray-200: #e5e5e5;
       --gray-800: #262626;
       --gray-900: #171717;
+      --payfast-orange: #ff6600;
+      --paystack-blue: #0BA4DB;
     }
 
     * {
@@ -238,8 +241,14 @@
     }
 
     .btn-payfast {
-      background: #ff6600;
-      border-color: #ff6600;
+      background: var(--payfast-orange);
+      border-color: var(--payfast-orange);
+      color: var(--pure-white);
+    }
+
+    .btn-paystack {
+      background: var(--paystack-blue);
+      border-color: var(--paystack-blue);
       color: var(--pure-white);
     }
 
@@ -312,6 +321,11 @@
       border-radius: 4px;
       display: none;
     }
+
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -350,35 +364,43 @@
           <p class="conversion-note">Approximately $<span id="usdPrice">0</span> USD</p>
         </div>
 
-        <!-- PayFast Form -->
-        <form action="https://www.payfast.co.za/eng/process" method="post" id="payfastForm">
-          <input type="hidden" name="merchant_id" value="15866158">
-          <input type="hidden" name="merchant_key" value="weccqyhwb3tms">
-          <input type="hidden" name="return_url" value="https://luminary-webcraft.vercel.app/thank-you.html">
-          <input type="hidden" name="cancel_url" value="https://luminary-webcraft.vercel.app/cancelled.html">
-          <input type="hidden" name="notify_url" value="https://luminary-webcraft.vercel.app/notify.php">
-          <input type="hidden" name="amount" id="payfastAmount" value="">
-          <input type="hidden" name="item_name" id="itemName" value="">
-          <input type="hidden" name="email_address" id="payfastEmail" value="">
-          
-          <div class="form-group">
-            <label for="clientEmail">Email Address *</label>
-            <input type="email" id="clientEmail" class="form-control" placeholder="your.email@example.com" required />
-          </div>
+        <div class="form-group">
+          <label for="clientEmail">Email Address *</label>
+          <input type="email" id="clientEmail" class="form-control" placeholder="your.email@example.com" required />
+        </div>
 
-          <div class="form-group">
-            <label for="clientName">Full Name *</label>
-            <input type="text" id="clientName" class="form-control" placeholder="John Smith" required />
-          </div>
-          
-          <div class="btn-group">
-            <button type="submit" class="btn btn-payfast" id="payfastButton">Pay with PayFast</button>
-          </div>
-        </form>
+        <div class="form-group">
+          <label for="clientName">Full Name *</label>
+          <input type="text" id="clientName" class="form-control" placeholder="John Smith" required />
+        </div>
 
         <div class="payment-methods">
-          <h4>Or pay with</h4>
+          <h4>Choose Payment Method</h4>
+          
+          <!-- PayFast Form -->
+          <form action="https://www.payfast.co.za/eng/process" method="post" id="payfastForm">
+            <input type="hidden" name="merchant_id" value="15866158">
+            <input type="hidden" name="merchant_key" value="weccqyhwb3tms">
+            <input type="hidden" name="return_url" value="https://luminary-webcraft.vercel.app/thank-you.html">
+            <input type="hidden" name="cancel_url" value="https://luminary-webcraft.vercel.app/cancelled.html">
+            <input type="hidden" name="notify_url" value="https://luminary-webcraft.vercel.app/notify.php">
+            <input type="hidden" name="amount" id="payfastAmount" value="">
+            <input type="hidden" name="item_name" id="itemName" value="">
+            <input type="hidden" name="email_address" id="payfastEmail" value="">
+            
+            <div class="btn-group">
+              <button type="submit" class="btn btn-payfast" id="payfastButton">Pay with PayFast</button>
+            </div>
+          </form>
+
+          <!-- Paystack Button -->
+          <div class="btn-group">
+            <button type="button" class="btn btn-paystack" id="paystackButton">Pay with Paystack</button>
+          </div>
+
+          <!-- PayPal -->
           <div id="paypal-button-container"></div>
+          
           <div class="payment-icons">
             <span class="payment-icon">💳</span>
             <span class="payment-icon">🔒</span>
@@ -412,6 +434,83 @@
       document.getElementById('errorMessage').style.display = 'none';
     }
 
+    // Paystack payment functionality
+    function initializePaystack(price, plan, convertedUSD) {
+      const paystackButton = document.getElementById('paystackButton');
+      
+      if (!paystackButton) return;
+      
+      paystackButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('clientEmail').value;
+        const name = document.getElementById('clientName').value;
+        
+        if (!email || !name) {
+          alert('Please fill in your email and name before proceeding with Paystack.');
+          return;
+        }
+        
+        if (!isValidEmail(email)) {
+          alert('Please enter a valid email address.');
+          return;
+        }
+        
+        // Convert ZAR to kobo (Paystack uses kobo for NGN)
+        // Since you're dealing with ZAR, we'll use the amount in cents
+        const amountInCents = Math.round(price * 100);
+        
+        // Show loading state
+        paystackButton.textContent = 'Processing...';
+        paystackButton.disabled = true;
+        
+        // Initialize Paystack payment
+        const handler = PaystackPop.setup({
+          key: 'pk_live_b0e23eb460227971c46e2814c6b7b1a8977ba627', // Replace with your actual public key
+          email: email,
+          amount: amountInCents,
+          currency: 'ZAR',
+          ref: 'LW_' + Math.floor((Math.random() * 1000000000) + 1),
+          metadata: {
+            custom_fields: [
+              {
+                display_name: "Customer Name",
+                variable_name: "customer_name",
+                value: name
+              },
+              {
+                display_name: "Plan",
+                variable_name: "plan",
+                value: plan
+              }
+            ]
+          },
+          callback: function(response) {
+            // Payment successful
+            console.log('Paystack payment successful:', response);
+            paystackButton.textContent = 'Payment Successful!';
+            
+            // Redirect to thank you page
+            window.location.href = `thank-you.html?plan=${encodeURIComponent(plan)}&payer=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&payment=paystack&amount=${price}&reference=${response.reference}`;
+          },
+          onClose: function() {
+            // Payment cancelled
+            console.log('Paystack payment cancelled');
+            paystackButton.textContent = 'Pay with Paystack';
+            paystackButton.disabled = false;
+            alert('Payment was cancelled. Please try again if you wish to complete your purchase.');
+          }
+        });
+        
+        handler.openIframe();
+      });
+    }
+
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
     // Initialize when page loads
     document.addEventListener('DOMContentLoaded', function() {
       const plan = getQueryParam('plan');
@@ -422,6 +521,7 @@
       if (!plan || !priceStr) {
         showError('No plan selected. Please go back and select a plan to continue.');
         document.getElementById('payfastButton').style.display = 'none';
+        document.getElementById('paystackButton').style.display = 'none';
         document.getElementById('paypal-button-container').innerHTML = 
           '<p style="color:var(--gray-200);">Please select a plan from our pricing page.</p>';
         return;
@@ -432,6 +532,7 @@
       if (isNaN(price) || price <= 0) {
         showError('Invalid plan price. Please contact us for custom quotes.');
         document.getElementById('payfastButton').style.display = 'none';
+        document.getElementById('paystackButton').style.display = 'none';
         document.getElementById('paypal-button-container').innerHTML = 
           '<p style="color:var(--gray-200);">Custom plans require contacting us for a quote. Please email luminarywebcraft@gmail.com</p>';
         return;
@@ -451,7 +552,7 @@
       payfastAmount.value = price.toFixed(2);
       itemName.value = `Luminary WebCraft - ${plan} Plan`;
 
-      // Fetch exchange rate and setup PayPal
+      // Fetch exchange rate and setup payment methods
       fetch('https://api.exchangerate-api.com/v4/latest/ZAR')
         .then(res => {
           if (!res.ok) throw new Error('Network response was not ok');
@@ -461,6 +562,9 @@
           const rate = data.rates.USD;
           const convertedUSD = (price * rate).toFixed(2);
           usdDisplay.textContent = convertedUSD;
+
+          // Initialize Paystack
+          initializePaystack(price, plan, convertedUSD);
 
           // Initialize PayPal
           paypal.Buttons({
@@ -500,7 +604,7 @@
             },
             onError: function (err) {
               console.error('PayPal Error:', err);
-              alert('There was an error with PayPal. Please try PayFast or contact us.');
+              alert('There was an error with PayPal. Please try PayFast or Paystack.');
             }
           }).render('#paypal-button-container');
         })
@@ -511,7 +615,10 @@
           const convertedUSD = (price * fallbackRate).toFixed(2);
           usdDisplay.textContent = convertedUSD + ' (estimated)';
           
-          // Still initialize PayPal with estimated rate
+          // Still initialize payment methods with estimated rate
+          initializePaystack(price, plan, convertedUSD);
+          
+          // Initialize PayPal with estimated rate
           paypal.Buttons({
             style: {
               shape: 'rect',
@@ -571,6 +678,7 @@
         // Optional: You can add loading state here
         document.getElementById('payfastButton').textContent = 'Processing...';
         document.getElementById('payfastButton').disabled = true;
+        document.getElementById('payfastButton').classList.add('loading');
       });
     });
   </script>
