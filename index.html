@@ -6,13 +6,43 @@
   <title>Luminary WebCraft | Professional Web Development</title>
   <meta name="description" content="Professional web development and career document services with cutting-edge 3D design">
 
+  <!-- =================================================== -->
+  <!-- 🔒 ANALYTICS SETUP - FOR YOUR EYES ONLY -->
+  <!-- 
+    STEP 1: Go to analytics.google.com and create account
+    STEP 2: Get your GA4 Measurement ID (starts with G-)
+    STEP 3: Go to clarity.microsoft.com and create account  
+    STEP 4: Get your Clarity Project ID
+    STEP 5: Replace the placeholder IDs below with your actual IDs
+    STEP 6: Only YOU can see data at analytics.google.com and clarity.microsoft.com
+  -->
+  <!-- =================================================== -->
+
+  <!-- Google Analytics - REPLACE G-YOUR_ACTUAL_ID_HERE -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOUR_ACTUAL_ID_HERE"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-X4W5ZQMPV4');
+  </script>
+
+  <!-- Microsoft Clarity - REPLACE YOUR_ACTUAL_CLARITY_ID -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "u6jp6ps27q");
+  </script>
+
   <!-- Open Graph Tags -->
-<meta property="og:title" content="Luminary WebCraft - Professional Web Development Services" />
-<meta property="og:description" content="Custom websites, career documents, and professional online solutions. Transform your digital presence today." />
-<meta property="og:image" content="https://luminary-webcraft.vercel.app/images/preview-image.jpg.jpg"/>
-<meta property="og:url" content="https://luminary-webcraft.vercel.app/" />
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="Luminary WebCraft"/>
+  <meta property="og:title" content="Luminary WebCraft - Professional Web Development Services" />
+  <meta property="og:description" content="Custom websites, career documents, and professional online solutions. Transform your digital presence today." />
+  <meta property="og:image" content="https://luminary-webcraft.vercel.app/images/preview-image.jpg.jpg"/>
+  <meta property="og:url" content="https://luminary-webcraft.vercel.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Luminary WebCraft"/>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -42,6 +72,62 @@
       color: var(--pure-white);
       overflow-x: hidden;
       line-height: 1.6;
+    }
+
+    /* Cookie Consent Banner */
+    .cookie-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--gray-900);
+      border-top: 1px solid var(--gray-800);
+      padding: 1.5rem;
+      z-index: 10000;
+      display: none;
+    }
+
+    .cookie-banner.show {
+      display: block;
+    }
+
+    .cookie-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .cookie-text {
+      flex: 1;
+      color: var(--gray-200);
+      font-size: 0.9rem;
+    }
+
+    .cookie-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .cookie-btn {
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--gray-800);
+      background: transparent;
+      color: var(--pure-white);
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .cookie-btn.accept {
+      background: var(--pure-white);
+      color: var(--pure-black);
+    }
+
+    .cookie-btn:hover {
+      border-color: var(--pure-white);
     }
 
     /* Professional Header */
@@ -422,6 +508,16 @@
       .btn-group {
         justify-content: center;
       }
+
+      .cookie-content {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .cookie-buttons {
+        width: 100%;
+        justify-content: center;
+      }
     }
 
     /* 3D Animation Styles */
@@ -436,6 +532,20 @@
   </style>
 </head>
 <body>
+  <!-- Cookie Consent Banner -->
+  <div class="cookie-banner" id="cookieBanner">
+    <div class="cookie-content">
+      <div class="cookie-text">
+        We use cookies and analytics to improve your experience and understand how you use our site. 
+        You can accept all, or manage your preferences.
+      </div>
+      <div class="cookie-buttons">
+        <button class="cookie-btn" id="rejectCookies">Necessary Only</button>
+        <button class="cookie-btn accept" id="acceptCookies">Accept All</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Header -->
   <header>
     <a class="logo" href="#">
@@ -700,8 +810,146 @@
       });
     }
 
-    // Initialize when page loads
-    document.addEventListener('DOMContentLoaded', init3DScene);
+    // Advanced Analytics Tracking
+    function setupAdvancedTracking() {
+      // Track button clicks
+      document.addEventListener('click', function(e) {
+        const target = e.target;
+        
+        // Track all button clicks
+        if (target.matches('.btn, .btn-primary, .pricing-card a, .plan a')) {
+          const buttonText = target.textContent.trim();
+          const buttonType = target.classList.contains('btn-primary') ? 'primary' : 'secondary';
+          const planName = target.closest('.pricing-card, .plan') ? 
+            target.closest('.pricing-card, .plan').querySelector('h3').textContent : 'none';
+          
+          // Log to console (for debugging)
+          console.log('Button clicked:', {
+            text: buttonText,
+            type: buttonType,
+            plan: planName,
+            timestamp: new Date().toISOString(),
+            url: window.location.href
+          });
+
+          // Send to Google Analytics
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'button_click', {
+              'event_category': 'engagement',
+              'event_label': buttonText,
+              'plan_name': planName,
+              'button_type': buttonType,
+              'value': 1
+            });
+          }
+        }
+
+        // Track navigation clicks
+        if (target.matches('nav a, .footer-column a')) {
+          const linkText = target.textContent.trim();
+          const linkUrl = target.getAttribute('href');
+          
+          console.log('Navigation clicked:', {
+            text: linkText,
+            url: linkUrl,
+            timestamp: new Date().toISOString()
+          });
+
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'nav_click', {
+              'event_category': 'navigation',
+              'event_label': linkText,
+              'link_url': linkUrl
+            });
+          }
+        }
+      });
+
+      // Track scroll depth
+      let scrollDepthTracked = [];
+      window.addEventListener('scroll', function() {
+        const scrollPercent = Math.round((window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100);
+        
+        // Track at 25%, 50%, 75%, 90%
+        [25, 50, 75, 90].forEach(threshold => {
+          if (scrollPercent >= threshold && !scrollDepthTracked.includes(threshold)) {
+            scrollDepthTracked.push(threshold);
+            console.log(`Scroll depth: ${threshold}%`);
+
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'scroll_depth', {
+                'event_category': 'engagement',
+                'event_label': `${threshold}%`,
+                'value': threshold
+              });
+            }
+          }
+        });
+      });
+
+      // Track time on page
+      let startTime = Date.now();
+      window.addEventListener('beforeunload', function() {
+        const timeSpent = Math.round((Date.now() - startTime) / 1000);
+        
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'time_spent', {
+            'event_category': 'engagement',
+            'event_label': 'page_visit',
+            'value': timeSpent
+          });
+        }
+      });
+    }
+
+    // Cookie Consent Management
+    function setupCookieConsent() {
+      const acceptBtn = document.getElementById('acceptCookies');
+      const rejectBtn = document.getElementById('rejectCookies');
+      const banner = document.getElementById('cookieBanner');
+
+      // Check if user has already made a choice
+      const cookiesAccepted = localStorage.getItem('cookiesAccepted');
+      
+      if (cookiesAccepted === null) {
+        // Show banner if no choice made
+        setTimeout(() => {
+          banner.classList.add('show');
+        }, 1000);
+      }
+
+      acceptBtn.addEventListener('click', function() {
+        localStorage.setItem('cookiesAccepted', 'true');
+        banner.classList.remove('show');
+        // Analytics are already loaded in head, but we enable advanced tracking
+        setupAdvancedTracking();
+      });
+
+      rejectBtn.addEventListener('click', function() {
+        localStorage.setItem('cookiesAccepted', 'false');
+        banner.classList.remove('show');
+        // We could disable analytics here, but for simplicity we'll just not track advanced events
+      });
+
+      // If cookies were previously accepted, enable advanced tracking
+      if (cookiesAccepted === 'true') {
+        setupAdvancedTracking();
+      }
+    }
+
+    // Initialize everything when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      init3DScene();
+      setupCookieConsent();
+      
+      // Track page view
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'page_view', {
+          'page_title': document.title,
+          'page_location': window.location.href
+        });
+      }
+    });
   </script>
 </body>
 </html>
